@@ -6,7 +6,7 @@ This is compatible with versions >= 1.11.0 of `@medusajs/medusa`.
 
 - Create product reviews with images.
 - Create product review requests.
-- Import product reviews from csv through batch job.
+- Import product reviews from csv.
 
 ## How to Install
 
