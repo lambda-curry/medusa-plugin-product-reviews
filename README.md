@@ -1,6 +1,12 @@
+<h1 align="center">Medusa Product Reviews Plugin</h1>
+
+<h4 align="center">
+    <a href="https://adrien2p.github.io/medusa-extender/#/" alt="Full documentation">Full documentation website</a>
+</h4>
+
 ## Compatibility
 
-This is compatible with versions >= 1.11.0 of `@medusajs/medusa`.
+This is compatible with versions >= 1.12.0 of `@medusajs/medusa`.
 
 ## Features
 

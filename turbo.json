@@ -5,6 +5,9 @@
       "dependsOn": ["^build"],
       "outputs": ["!node_modules/**", "!src/**", "/*/**"]
     },
+    "dev": {
+      "dependsOn": ["^build"]
+    },
     "publish": {
       "dependsOn": ["^build"]
     }
