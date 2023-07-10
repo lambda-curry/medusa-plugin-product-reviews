@@ -13,7 +13,7 @@ This is compatible with versions >= 1.11.0 of `@medusajs/medusa`.
 1\. Run the following command in the directory of the Medusa backend:
 
 ```bash
-npm install medusa-plugin-reviews
+yarn add @lambdacurry/medusa-plugin-product-reviews
 ```
 
 2\. In `medusa-config.js` add the following at the end of the `plugins` array:

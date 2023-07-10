@@ -9,7 +9,7 @@ import {
 import ProductReviewRepository from "../repositories/product-review";
 import { EntityManager, FindOptionsWhere, In } from "typeorm";
 import { ProductReview } from "../models";
-import { ProductReviewImageService } from "../services";
+import { ProductReviewImageService } from ".";
 import { MedusaError, isDefined } from "medusa-core-utils";
 import { CreateProductReviewReq, UpdateProductReviewReq } from "../validators";
 import ImageRepository from "@medusajs/medusa/dist/repositories/image";
@@ -62,12 +62,14 @@ class ProductReviewService extends TransactionBaseService {
   public async stats(filter: { product_id: string[] }): Promise<ProductReviewStats[]> {
     const repo = this.activeManager_.withRepository(this.productReviewRepository_);
 
+    const where = buildQuery(filter);
+
     const query = repo
       .createQueryBuilder("review")
-      .where(filter)
-      .select("rating, COUNT(*) AS count", "product_id")
-      .groupBy("review.rating")
-      .addGroupBy("review.product_id");
+      .where({ product_id: In(filter.product_id) })
+      .select("rating as rating, product_id as product_id, COUNT(*) AS count")
+      .groupBy("rating")
+      .addGroupBy("product_id");
 
     const results: { rating: string; count: string; product_id: string }[] = await query.getRawMany();
 

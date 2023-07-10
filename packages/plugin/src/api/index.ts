@@ -7,6 +7,7 @@ import { parseCorsOrigins } from "medusa-core-utils";
 import { ConfigModule, authenticate, authenticateCustomer } from "@medusajs/medusa";
 import { routes as productReviewRoutes } from "./routes/product-review-routes";
 import { routes as productReviewRequestRoutes } from "./routes/product-review-request-routes";
+import { routes as imageUploadRoutes } from "./routes/product-review-image-upload-routes";
 
 export type RouteMethod = "all" | "get" | "post" | "put" | "delete" | "patch" | "options" | "head";
 export interface RouteConfig {
@@ -16,7 +17,31 @@ export interface RouteConfig {
   requiredAuth: boolean;
 }
 
-const routes: RouteConfig[] = [...productReviewRoutes, ...productReviewRequestRoutes];
+const routes: RouteConfig[] = [...productReviewRoutes, ...productReviewRequestRoutes, ...imageUploadRoutes];
+
+export const createRoute = (config: ConfigModule, router: Router, route: RouteConfig) => {
+  try {
+    if (route.path.startsWith("/admin")) return createAdminRoute(router, route);
+    if (route.path.startsWith("/store")) return createStoreRoute(router, route);
+  } catch (error) {
+    console.error(error, route);
+  }
+};
+
+const createAdminRoute = (router: Router, route: RouteConfig) => {
+  const { method, path, handlers, requiredAuth } = route;
+  const defaultAdminMiddleware = [requiredAuth ? authenticate() : null].filter((a) => a !== null);
+
+  router[method](path, ...defaultAdminMiddleware, ...handlers);
+};
+
+const createStoreRoute = (router: Router, route: RouteConfig) => {
+  const { method, path, handlers, requiredAuth } = route;
+
+  const defaultMiddleware = [requiredAuth ? authenticateCustomer() : null].filter((a) => a);
+
+  router[method](path, ...defaultMiddleware, ...handlers);
+};
 
 export default function (rootDirectory: string) {
   const config = configLoader(rootDirectory);
@@ -45,27 +70,3 @@ export default function (rootDirectory: string) {
 
   return router;
 }
-
-export const createRoute = (config: ConfigModule, router: Router, route: RouteConfig) => {
-  try {
-    if (route.path.startsWith("/admin")) return createAdminRoute(router, route);
-    if (route.path.startsWith("/store")) return createStoreRoute(router, route);
-  } catch (error) {
-    console.error(error, route);
-  }
-};
-
-const createAdminRoute = (router: Router, route: RouteConfig) => {
-  const { method, path, handlers, requiredAuth } = route;
-  const defaultAdminMiddleware = [requiredAuth ? authenticate() : null].filter((a) => a !== null);
-
-  router[method](path, ...defaultAdminMiddleware, ...handlers);
-};
-
-const createStoreRoute = (router: Router, route: RouteConfig) => {
-  const { method, path, handlers, requiredAuth } = route;
-
-  const defaultMiddleware = [requiredAuth ? authenticateCustomer() : null].filter((a) => a);
-
-  router[method](path, ...defaultMiddleware, ...handlers);
-};

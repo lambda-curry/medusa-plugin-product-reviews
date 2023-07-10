@@ -4,3 +4,5 @@ node_modules
 yarn-error.log
 .env.*
 tsconfig.tsbuildinfo
+**/node_modules
+.turbo
