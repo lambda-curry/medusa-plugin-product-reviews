@@ -1,6 +1,6 @@
 {
   "name": "@lambdacurry/medusa-plugin-product-reviews",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "A plugin that enables customer product reviews for your Medusa store.",
   "author": "Lambda Curry <team@lambdacurry.dev>",
   "license": "MIT",
