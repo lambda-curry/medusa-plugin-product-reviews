@@ -4,7 +4,9 @@
   <img src="https://img.freepik.com/premium-vector/five-star-rating-icon-rating-stars-vector-flat-stars-isolated_118339-1270.jpg" alt="Medusa-extender logo" width="500" height="auto" />
 </p>
 
-[![npm version](https://badge.fury.io/js/@lambdacurry%2Fmedusa-plugin-product-reviews.svg)](https://badge.fury.io/js/@lambdacurry%2Fmedusa-plugin-product-reviews)
+@lambdacurry/medusa-plugin-product-previews [![npm version](https://badge.fury.io/js/@lambdacurry%2Fmedusa-plugin-product-reviews.svg)](https://badge.fury.io/js/@lambdacurry%2Fmedusa-plugin-product-reviews)
+
+@lambdacurry/medusa-plugin-product-previews-client [![npm version](https://badge.fury.io/js/@lambdacurry%2Fmedusa-plugin-product-reviews-client.svg)](https://badge.fury.io/js/@lambdacurry%2Fmedusa-plugin-product-reviews-client)
 
 <p> Made with ❤️ by the team behind <a href="https://lambdacurry.dev">Lambda Curry</a> and <a href="https://market.haus">MarketHaus</a> </p>
 

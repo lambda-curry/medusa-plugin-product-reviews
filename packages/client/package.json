@@ -7,7 +7,7 @@
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc --build",
-    "publish": "yarn publish --patch",
+    "publish-patch": "yarn publish --patch",
     "watch": "tsc --build --watch",
     "dev": "tsc --watch --preserveWatchOutput --incremental"
   },
