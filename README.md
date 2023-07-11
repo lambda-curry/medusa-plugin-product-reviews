@@ -115,7 +115,7 @@ export default class ProductReviewSubscriber {
     await this.eventBusService_.emit(
       "email.order_product_review_request",
       { order_id: id, review_request_id: reviewRequest.id },
-      { delay: SEVEN_DAYS } // 7 days
+      { delay: SEVEN_DAYS }
     );
   }
 
