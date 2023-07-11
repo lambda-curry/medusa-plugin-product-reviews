@@ -38,5 +38,6 @@
     "ecommerce",
     "headless",
     "medusa"
-  ]
+  ],
+  "packageManager": "yarn@3.6.1"
 }

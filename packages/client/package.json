@@ -4,7 +4,6 @@
   "description": "A plugin that enables customer product reviews for your Medusa store.",
   "author": "Lambda Curry <team@lambdacurry.dev>",
   "license": "MIT",
-  "private": false,
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc --build",
