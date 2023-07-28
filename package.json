@@ -10,6 +10,7 @@
     "packages/*"
   ],
   "scripts": {
+    "compose": "turbo compose",
     "build": "turbo build",
     "publish": "turbo publish",
     "dev": "turbo dev"

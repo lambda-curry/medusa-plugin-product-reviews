@@ -1,4 +1,4 @@
-import { Customer, Image, SoftDeletableEntity } from "@medusajs/medusa";
+import { Customer, Image, Product, SoftDeletableEntity } from "@medusajs/medusa";
 import { BeforeInsert, Column, Entity, Index, JoinColumn, JoinTable, ManyToMany, ManyToOne } from "typeorm";
 import { Max, Min } from "class-validator";
 import { generateEntityId } from "@medusajs/medusa/dist/utils";
@@ -24,6 +24,10 @@ export class ProductReview extends SoftDeletableEntity {
   @Min(1)
   @Max(5)
   rating: number;
+
+  @ManyToOne(() => Product)
+  @JoinColumn({ name: "product_id" })
+  product: Product;
 
   @Column({ nullable: false })
   content: string;

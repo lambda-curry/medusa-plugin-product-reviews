@@ -10,7 +10,7 @@ import {
   UpdateProductReviewReq,
 } from "../../validators";
 import { MedusaError } from "medusa-core-utils";
-import { Customer, CustomerService, OrderService } from "@medusajs/medusa";
+import { Customer, CustomerService, OrderService, Selector } from "@medusajs/medusa";
 import { RouteConfig } from "..";
 import { ProductReviewRequestService } from "../../services";
 import { ProductReview } from "../../models";
@@ -119,7 +119,7 @@ async function listProductReviews(req: Request, res: Response) {
 
   const [reviews, count] = await productReviewService.listAndCount(
     {
-      ...selector,
+      ...(selector as Selector<ProductReview>),
     },
     {
       order: { updated_at: "DESC" },

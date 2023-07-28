@@ -1,4 +1,4 @@
-import { IsString, IsNumber, IsOptional, IsArray, Min, Max } from "class-validator";
+import { IsString, IsNumber, IsOptional, IsArray, Min, Max, ValidateNested } from "class-validator";
 import { Type } from "class-transformer";
 import { IsType } from "@medusajs/medusa/dist/utils/validators/is-type";
 
@@ -87,6 +87,12 @@ export class ProductReviewsPaginationParam {
   q?: string;
 }
 
+export class ProductReviewsProductFilter {
+  @IsOptional()
+  @IsType([String, [String]])
+  id?: string | string[];
+}
+
 export class StoreGetProductReviewsParams extends ProductReviewsPaginationParam {
   @IsOptional()
   @IsType([String, [String]])
@@ -99,6 +105,11 @@ export class StoreGetProductReviewsParams extends ProductReviewsPaginationParam 
   @IsOptional()
   @IsType([String, [String]])
   customer_id?: string | string[];
+
+  @IsOptional()
+  @Type(() => ProductReviewsProductFilter)
+  @ValidateNested()
+  product: ProductReviewsProductFilter;
 
   @IsType([String, [String]])
   @IsOptional()

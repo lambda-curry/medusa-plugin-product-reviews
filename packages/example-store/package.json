@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "Example store for product reviews plugin.",
   "author": "Derek Wene",
+  "private": true,
   "license": "MIT",
   "keywords": [
     "sqlite",
@@ -13,8 +14,8 @@
     "medusa"
   ],
   "scripts": {
-    "clean": "cross-env ./node_modules/.bin/rimraf dist",
-    "build": "cross-env npm run clean && npm run build:server && npm run build:admin",
+    "compose": "docker compose up -d",
+    "clean": "cross-env rimraf dist",
     "build:server": "cross-env npm run clean && tsc -p tsconfig.json",
     "build:admin": "cross-env medusa-admin build",
     "watch": "cross-env tsc --watch",
@@ -22,17 +23,17 @@
     "seed": "cross-env medusa seed -f ./data/seed.json",
     "start": "cross-env npm run build && medusa start",
     "start:custom": "cross-env npm run build && node --preserve-symlinks --trace-warnings index.js",
-    "dev": "cross-env npm run build:server && medusa develop"
+    "dev": "ts-node src/main.ts",
+    "migrate": "medusa migrations run"
   },
   "dependencies": {
     "@lambdacurry/medusa-plugin-product-reviews": "workspace:*",
-    "@medusajs/admin": "^7.0.0-beta-20230619170349",
     "@medusajs/cache-inmemory": "^1.8.7",
     "@medusajs/cache-redis": "^1.8.7",
     "@medusajs/event-bus-local": "^1.9.4",
     "@medusajs/event-bus-redis": "^1.8.7",
     "@medusajs/file-local": "^1.0.1",
-    "@medusajs/medusa": "^1.12.1-beta-20230619170349",
+    "@medusajs/medusa": "1.12.0",
     "@tanstack/react-query": "4.22.0",
     "babel-preset-medusa-package": "^1.1.13",
     "body-parser": "^1.19.0",
@@ -44,7 +45,7 @@
     "medusa-payment-manual": "^1.0.23",
     "medusa-payment-stripe": "^6.0.1",
     "prism-react-renderer": "^2.0.4",
-    "typeorm": "^0.3.16"
+    "typeorm": "0.3.16"
   },
   "devDependencies": {
     "@babel/cli": "^7.14.3",
@@ -62,6 +63,7 @@
     "rimraf": "^3.0.2",
     "ts-jest": "^27.0.7",
     "ts-loader": "^9.2.6",
+    "ts-node": "^10.9.1",
     "typescript": "^4.5.2"
   },
   "jest": {

@@ -1,0 +1,15 @@
+version: "3"
+services:
+  db:
+    image: postgres
+    container_name: example-store-db
+    volumes:
+      - database:/var/lib/postgresql/data
+      - ./docker/postgres-init.sh:/docker-entrypoint-initdb.d/init-user-db.sh
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: "postgres"
+
+volumes:
+  database:
