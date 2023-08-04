@@ -106,6 +106,7 @@ async function listProductReviews(req: Request, res: Response) {
     if (!order) throw new MedusaError(MedusaError.Types.INVALID_DATA, "No reviews found matching order");
 
     filter.product_id = order?.items.map((item) => item.variant.product_id);
+    filter.customer_id = order?.customer_id;
     delete filter.order_id;
   }
 
