@@ -1,5 +1,4 @@
 import errorHandler from "@medusajs/medusa/dist/api/middlewares/error-handler";
-import configLoader from "@medusajs/medusa/dist/loaders/config";
 import bodyParser from "body-parser";
 import cors from "cors";
 import { Router } from "express";
@@ -19,7 +18,7 @@ export interface RouteConfig {
 
 const routes: RouteConfig[] = [...productReviewRoutes, ...productReviewRequestRoutes, ...imageUploadRoutes];
 
-export const createRoute = (config: ConfigModule, router: Router, route: RouteConfig) => {
+export const createRoute = (router: Router, route: RouteConfig) => {
   try {
     if (route.path.startsWith("/admin")) return createAdminRoute(router, route);
     if (route.path.startsWith("/store")) return createStoreRoute(router, route);
@@ -44,27 +43,28 @@ const createStoreRoute = (router: Router, route: RouteConfig) => {
 };
 
 export default function (rootDirectory: string) {
-  const config = configLoader(rootDirectory);
   const router = Router();
 
   router.use(bodyParser.json());
 
-  const adminCors = cors({
-    origin: parseCorsOrigins(config.projectConfig.admin_cors || ""),
-    credentials: true,
-  });
-  const storeCors = cors({
-    origin: parseCorsOrigins(config.projectConfig.store_cors || ""),
-    credentials: true,
-  });
-
   router.use((req, res, next) => {
+    const config = req.scope.resolve<ConfigModule>("config");
+
+    const adminCors = cors({
+      origin: parseCorsOrigins(config.projectConfig.admin_cors || ""),
+      credentials: true,
+    });
+    const storeCors = cors({
+      origin: parseCorsOrigins(config.projectConfig.store_cors || ""),
+      credentials: true,
+    });
+
     if (req.path.startsWith("/admin")) return adminCors(req, res, next);
     if (req.path.startsWith("/store")) return storeCors(req, res, next);
     return next();
   });
 
-  for (const route of routes) createRoute(config, router, route);
+  for (const route of routes) createRoute(router, route);
 
   router.use(errorHandler());
 
