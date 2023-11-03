@@ -180,7 +180,7 @@ class ProductReviewService extends TransactionBaseService {
           })
         : [];
 
-      const images = await this.productReviewImageService.upsert(data.images as any);
+      const images = await this.productReviewImageService.upsert(data.images);
 
       const newProductReviewData = {
         ...data,

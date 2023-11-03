@@ -16,7 +16,7 @@ export interface RouteConfig {
   requiredAuth: boolean;
 }
 
-const routes: RouteConfig[] = [...productReviewRoutes, ...productReviewRequestRoutes, ...imageUploadRoutes];
+const routes: RouteConfig[] = [...imageUploadRoutes, ...productReviewRoutes, ...productReviewRequestRoutes];
 
 export const createRoute = (router: Router, route: RouteConfig) => {
   try {
@@ -48,7 +48,7 @@ export default function (rootDirectory: string) {
   router.use(bodyParser.json());
 
   router.use((req, res, next) => {
-    const config = req.scope.resolve<ConfigModule>("config");
+    const config = req.scope.resolve<ConfigModule>("configModule");
 
     const adminCors = cors({
       origin: parseCorsOrigins(config.projectConfig.admin_cors || ""),

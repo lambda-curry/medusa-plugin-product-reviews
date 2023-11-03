@@ -26,28 +26,14 @@ class ProductReviewImageService extends TransactionBaseService {
     this.fileService = container.fileService;
   }
 
-  async upsert(images: (NodeOnDiskFile | string)[]): Promise<Image[]> {
+  async upsert(images: string[]): Promise<Image[]> {
     return await this.atomicPhase_(async (transaction) => {
       const repo = transaction.withRepository(this.imageRepository_);
       if (!images || images.length < 1) {
         return [];
       }
 
-      const imageUrls = await Promise.all(
-        images.map(async (image) => {
-          if (typeof image === "string") {
-            const importedImage = await this.importViaUrl(image);
-            return importedImage.url;
-          }
-
-          const formattedImage = await convertToExpressMulterFile(image);
-          const fileUploadResult = await this.fileService.upload(formattedImage);
-          await fs.unlink(formattedImage.path, (err) => (err ? console.log(err) : null));
-          return fileUploadResult.url;
-        })
-      );
-
-      return await repo.upsertImages(imageUrls);
+      return await repo.upsertImages(images);
     });
   }
 

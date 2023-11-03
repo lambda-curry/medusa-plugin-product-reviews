@@ -20,9 +20,9 @@ export class CreateProductReviewReq {
   @IsOptional()
   content?: string;
 
-  @IsArray()
+  @IsType([[String]])
   @IsOptional()
-  images?: (File | string)[];
+  images?: string[];
 
   @IsString()
   @IsOptional()
@@ -50,9 +50,9 @@ export class UpdateProductReviewReq {
   @IsOptional()
   content?: string;
 
-  @IsArray()
   @IsOptional()
-  images?: (File | string)[];
+  @IsType([[String]])
+  images?: string[];
 
   @IsArray()
   @IsOptional()

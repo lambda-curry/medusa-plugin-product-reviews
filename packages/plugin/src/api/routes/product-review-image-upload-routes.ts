@@ -2,13 +2,16 @@ import { IFileService, wrapHandler } from "@medusajs/medusa";
 import { RouteConfig } from "..";
 import { Request, Response } from "express";
 import fs from "fs";
+import multer from "multer";
+
+const upload = multer({ dest: "uploads/" });
 
 export const routes: RouteConfig[] = [
   {
     requiredAuth: false,
     path: "/store/product-reviews/upload",
     method: "post",
-    handlers: [wrapHandler(uploadImage)],
+    handlers: [upload.array("files"), wrapHandler(uploadImage)],
   },
 ];
 
