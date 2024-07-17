@@ -9,7 +9,11 @@ export class productReviewImage1683131541072 implements MigrationInterface {
         "image_id" character varying NOT NULL )`
     );
 
-    await queryRunner.createPrimaryKey("product_review_images", ["product_review_id", "image_id"]);
+    await queryRunner.query(`
+      ALTER TABLE "product_review_images"
+      ADD CONSTRAINT "PK_product_review_images"
+      PRIMARY KEY ("product_review_id", "image_id")
+    `);
 
     await queryRunner.query(
       `CREATE INDEX "IDX_4f166bb8c2bfcef2498d97b407" ON "product_review_images" ("product_review_id") `
