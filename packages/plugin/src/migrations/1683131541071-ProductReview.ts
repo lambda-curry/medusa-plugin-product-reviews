@@ -4,7 +4,7 @@ export class productReview1683131541071 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
       `CREATE TABLE IF NOT EXISTS "product_review" (
-        "id" character varying NOT NULL, 
+        "id" character varying NOT NULL PRIMARY KEY, 
         "product_id" character varying NOT NULL, 
         "product_variant_id" character varying,
         "customer_id" character varying NOT NULL,
@@ -15,9 +15,6 @@ export class productReview1683131541071 implements MigrationInterface {
         "deleted_at" TIMESTAMP WITH TIME ZONE )`
     );
     await queryRunner.query(`
-      ALTER TABLE "product_review"
-      ADD CONSTRAINT "PK_product_review" PRIMARY KEY ("id");
-
       ALTER TABLE "product_review"
       ADD CONSTRAINT "FK_product_review_product_id" FOREIGN KEY ("product_id")
       REFERENCES "product" ("id")
